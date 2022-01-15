@@ -1,5 +1,6 @@
 package com.addressbook;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -10,12 +11,53 @@ public class AddressBook {
 	static List<Contact> addressBook;
 
 	public static void main(String[] args) {
-		System.out.println("Welcome to AddressBook System");
-		Scanner scanner = new Scanner(System.in);
+		addressBook = new LinkedList<Contact>();
+		boolean isExit = false;
 
-		addContact(scanner);
-		showContacts();
-		editContact(scanner);
+		System.out.println("Welcome to AddressBook System");
+
+		Scanner scanner = new Scanner(System.in);
+		while (!isExit) {
+			System.out.println("Select the option from below");
+
+			if (addressBook.isEmpty()) {
+
+				System.out.println("1. Add Contact\n" + "2.Show Contacts\n5. Exit");
+			} else {
+
+				System.out.println("1. Add Contact"
+						+ "\n2. Display Contact\n3. Edit Contact\n4.Delete Contact\n5.Exit");
+			}
+
+			String option = scanner.next();
+			
+			switch (option) {
+			case "1":
+				addContact(scanner);
+				break;
+
+			case "2":
+				showContacts();
+				break;
+
+			case "3":
+				editContact(scanner);
+				break;
+
+			case "4":
+				deleteContact(scanner);
+				break;
+
+			case "5":
+				isExit = true;
+				break;
+
+			default:
+				System.out.println("Invalid option choosed.");
+				break;
+			}
+		}
+		scanner.close();
 	}
 
 	public static String validateFirstName(String firstName, Scanner scanner) {
@@ -204,4 +246,21 @@ public class AddressBook {
 		System.out.println("Contact has been edited.");
 	}
 
+	private static void deleteContact(Scanner scanner) {
+		System.out.println("Which contact you want to Delete? (Enter the First name)");
+		String firstName = scanner.nextLine();
+
+		Contact deleteContact = null;
+		for (int i = 0; i < addressBook.size(); i++) {
+			if (firstName.equals(addressBook.get(i).getFirstname())) {
+				deleteContact = addressBook.remove(i);
+			}
+		}
+
+		if (deleteContact == null) {
+			System.out.println("No contact found with name " + firstName + ".");
+		} else {
+			System.out.println(deleteContact.getFirstname() + "'s contact has been removed from your Address Book.");
+		}
+	}
 }
