@@ -1,5 +1,6 @@
 package com.addressbook;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,6 +63,7 @@ public class AddressBook {
 
 			case "7":
 				isExit = true;
+				sortedAddressbook();
 				break;
 
 			default:
@@ -302,5 +304,11 @@ public class AddressBook {
 
 		long count = addressBook.stream().filter(contacts -> contacts.getState().equalsIgnoreCase(state)).count();
 		System.out.println("Number Of Contacts :" + count);
+	}
+
+	private static void sortedAddressbook() {
+		Comparator<Contact> nameComparator = Comparator.comparing(Contact::getFirstname);
+		addressBook.stream().sorted(nameComparator).forEach(System.out::println);
+		;
 	}
 }
