@@ -26,12 +26,12 @@ public class AddressBook {
 				System.out.println("1. Add Contact\n" + "2.Show Contacts\n5. Exit");
 			} else {
 
-				System.out.println("1. Add Contact"
-						+ "\n2. Display Contact\n3. Edit Contact\n4.Delete Contact\n5.Exit");
+				System.out
+						.println("1. Add Contact" + "\n2. Display Contact\n3. Edit Contact\n4.Delete Contact\n5.Serach \n 6.Exit");
 			}
 
 			String option = scanner.next();
-			
+
 			switch (option) {
 			case "1":
 				addContact(scanner);
@@ -50,6 +50,10 @@ public class AddressBook {
 				break;
 
 			case "5":
+				searchCity(scanner);
+				break;
+
+			case "6":
 				isExit = true;
 				break;
 
@@ -155,47 +159,45 @@ public class AddressBook {
 	private static void addContact(Scanner scanner) {
 		Contact contact = new Contact();
 		boolean exisit = false;
-		
+
 		System.out.println("Enter First Name: ");
 		String firstName = scanner.nextLine();
 		contact.setFirstname(validateFirstName(firstName, scanner));
-		for(int i =0 ; i<addressBook.size();i++) {
-			if(firstName.equals(addressBook.get(i).getFirstname())) 
-			{
+		for (int i = 0; i < addressBook.size(); i++) {
+			if (firstName.equals(addressBook.get(i).getFirstname())) {
 				System.out.println("Name is already exisit");
 				exisit = true;
 			}
 		}
-		
-		if(!exisit) {
-		System.out.println("Enter Last Name: ");
-		String lname = scanner.nextLine();
-		contact.setLastname(validateLastName(lname, scanner));
 
-		System.out.println("Enter city : ");
-		String city = scanner.nextLine();
-		contact.setCity(validateCity(city, scanner));
+		if (!exisit) {
+			System.out.println("Enter Last Name: ");
+			String lname = scanner.nextLine();
+			contact.setLastname(validateLastName(lname, scanner));
 
-		System.out.println("Enter state : ");
-		String state = scanner.nextLine();
-		contact.setState(validateState(state, scanner));
+			System.out.println("Enter city : ");
+			String city = scanner.nextLine();
+			contact.setCity(validateCity(city, scanner));
 
-		System.out.println("Enter Zip code : ");
-		String zip = scanner.nextLine();
-		contact.setZipcode(validateZipcode(zip, scanner));
+			System.out.println("Enter state : ");
+			String state = scanner.nextLine();
+			contact.setState(validateState(state, scanner));
 
-		System.out.println("Enter Email Id: ");
-		String email = scanner.nextLine();
-		contact.setEmail(validateEmail(email, scanner));
+			System.out.println("Enter Zip code : ");
+			String zip = scanner.nextLine();
+			contact.setZipcode(validateZipcode(zip, scanner));
 
-		System.out.println("Enter phone  number: ");
-		String phone = scanner.nextLine();
-		contact.setPhonenumber(validatePhone(phone, scanner));
+			System.out.println("Enter Email Id: ");
+			String email = scanner.nextLine();
+			contact.setEmail(validateEmail(email, scanner));
 
-		addressBook.add(contact);
-		System.out.println("Contact has been saved.");
-		}else 
-		{
+			System.out.println("Enter phone  number: ");
+			String phone = scanner.nextLine();
+			contact.setPhonenumber(validatePhone(phone, scanner));
+
+			addressBook.add(contact);
+			System.out.println("Contact has been saved.");
+		} else {
 			System.out.println("Contact Name is already exisit.please try again");
 		}
 	}
@@ -276,5 +278,13 @@ public class AddressBook {
 		} else {
 			System.out.println(deleteContact.getFirstname() + "'s contact has been removed from your Address Book.");
 		}
+	}
+
+	private static void searchCity(Scanner scanner) {
+		System.out.println("Search the name by using City");
+		String city = scanner.nextLine();
+
+		addressBook.stream().filter(contacts -> contacts.getCity().equalsIgnoreCase(city)).forEach(System.out::println);
+		;
 	}
 }
