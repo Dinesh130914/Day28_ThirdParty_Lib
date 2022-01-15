@@ -1,5 +1,6 @@
 package com.addressbook;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -153,11 +154,20 @@ public class AddressBook {
 
 	private static void addContact(Scanner scanner) {
 		Contact contact = new Contact();
-
+		boolean exisit = false;
+		
 		System.out.println("Enter First Name: ");
 		String firstName = scanner.nextLine();
 		contact.setFirstname(validateFirstName(firstName, scanner));
-
+		for(int i =0 ; i<addressBook.size();i++) {
+			if(firstName.equals(addressBook.get(i).getFirstname())) 
+			{
+				System.out.println("Name is already exisit");
+				exisit = true;
+			}
+		}
+		
+		if(!exisit) {
 		System.out.println("Enter Last Name: ");
 		String lname = scanner.nextLine();
 		contact.setLastname(validateLastName(lname, scanner));
@@ -184,6 +194,10 @@ public class AddressBook {
 
 		addressBook.add(contact);
 		System.out.println("Contact has been saved.");
+		}else 
+		{
+			System.out.println("Contact Name is already exisit.please try again");
+		}
 	}
 
 	private static void showContacts() {
