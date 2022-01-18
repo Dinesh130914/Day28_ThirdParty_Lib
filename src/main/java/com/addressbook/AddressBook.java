@@ -63,9 +63,14 @@ public class AddressBook {
 
 			case "7":
 				isExit = true;
+				if(!addressBook.isEmpty()) {
 				sortedAddressbook();
 				System.out.println("Sorted by city");
 				sortedAddressbookWithCity();
+				}else 
+				{
+					System.out.println("No more contacts.Please add contacts to addressbook");
+				}
 				break;
 
 			default:
