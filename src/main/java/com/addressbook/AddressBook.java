@@ -1,7 +1,10 @@
 package com.addressbook;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +13,12 @@ import java.util.regex.Pattern;
 
 public class AddressBook {
 
+	private static  String CONTACT_FILE_PATH = "addressbook.txt";
 	static List<Contact> addressBook;
+
+	public AddressBook(Contact[] contactdata) {
+		addressBook = Arrays.asList(contactdata);
+	}
 
 	public static void main(String[] args) {
 		addressBook = new LinkedList<Contact>();
@@ -316,12 +324,32 @@ public class AddressBook {
 	private static void sortedAddressbook() {
 		Comparator<Contact> nameComparator = Comparator.comparing(Contact::getFirstname);
 		addressBook.stream().sorted(nameComparator).forEach(System.out::println);
-		;
+		
 	}
 
 	private static void sortedAddressbookWithCity() {
 		Comparator<Contact> nameComparator = Comparator.comparing(Contact::getCity);
 		addressBook.stream().sorted(nameComparator).forEach(System.out::println);
-		;
+		
+	}
+	
+	public void writedata() {
+
+		StringBuffer buffer = new StringBuffer();
+		addressBook.forEach(cont -> buffer.append(cont + "\n"));
+		try {
+			System.out.println("Write data to file completed");
+			Files.write(Paths.get(CONTACT_FILE_PATH), buffer.toString().getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void readdata() {
+		try {
+			Files.lines(Paths.get(CONTACT_FILE_PATH)).map(line->line.trim()).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
