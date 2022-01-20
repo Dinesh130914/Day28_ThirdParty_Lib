@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class AddressBook {
 
-	private static  String CONTACT_FILE_PATH = "addressbook.txt";
+	private static String CONTACT_FILE_PATH = "addressbook.txt";
 	static List<Contact> addressBook;
 
 	public AddressBook(Contact[] contactdata) {
@@ -71,12 +71,11 @@ public class AddressBook {
 
 			case "7":
 				isExit = true;
-				if(!addressBook.isEmpty()) {
-				sortedAddressbook();
-				System.out.println("Sorted by city");
-				sortedAddressbookWithCity();
-				}else 
-				{
+				if (!addressBook.isEmpty()) {
+					sortedAddressbook();
+					System.out.println("Sorted by city");
+					sortedAddressbookWithCity();
+				} else {
 					System.out.println("No more contacts.Please add contacts to addressbook");
 				}
 				break;
@@ -324,15 +323,15 @@ public class AddressBook {
 	private static void sortedAddressbook() {
 		Comparator<Contact> nameComparator = Comparator.comparing(Contact::getFirstname);
 		addressBook.stream().sorted(nameComparator).forEach(System.out::println);
-		
+
 	}
 
 	private static void sortedAddressbookWithCity() {
 		Comparator<Contact> nameComparator = Comparator.comparing(Contact::getCity);
 		addressBook.stream().sorted(nameComparator).forEach(System.out::println);
-		
+
 	}
-	
+
 	public void writedata() {
 
 		StringBuffer buffer = new StringBuffer();
@@ -347,7 +346,7 @@ public class AddressBook {
 
 	public void readdata() {
 		try {
-			Files.lines(Paths.get(CONTACT_FILE_PATH)).map(line->line.trim()).forEach(System.out::println);
+			Files.lines(Paths.get(CONTACT_FILE_PATH)).map(line -> line.trim()).forEach(System.out::println);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
